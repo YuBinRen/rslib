@@ -140,9 +140,28 @@
         rslib::Polynomial&lt;int&gt; result = a / b;
         std::cout &lt;&lt; result; // [-3,2,]
         </pre>
+        <h4>Evaluation</h4>
+        To evaluate a polynomial Horner's method is used. If there is given a polynomial:
+        \[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \]
+        then it can be rewritten as:
+        \[ a(x) = x(x(x \ldots (a_{m}x + a_{m-1}) + a_{m-2}) \ldots ) + a_1) + a_0 \]
+        Horner's method allows to evaluate polynomial with less number of multiplications than
+        in a regular way.<br/>
+        Example:
+        \[ a(x) = 2x^2+3x+2 = x(2x + 3) + 2\]
+        \[ a(2) = 2(2 \times 2 + 3) + 2 = 16 \]
+        Using <strong>rslib</strong>:
+        <pre class="prettyprint">
+        #include &lt;rslib/polynomial.h&gt;
+
+        rslib::Polynomial&lt;int&gt; a({2, 3, 2});
+        int result = a.evaluate(2);
+        std::cout &lt;&lt; result; // 16
+        </pre>
         <h3>Sources</h3>
         <ul>
           <li><a href="http://en.wikipedia.org/wiki/Polynomial_long_division">Polynomial long division</a></li>
+          <li><a href="http://en.wikipedia.org/wiki/Horner%27s_method">Horner's method</a></li>
         </ul>
       </section>
       <footer>
