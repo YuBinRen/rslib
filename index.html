@@ -160,10 +160,68 @@
         int result = a.evaluate(2);
         std::cout &lt;&lt; result; // 16
         </pre>
+        <h3>Simple finite field</h3>
+        Simple finite field consists of \(p\) elements where \(p\) is a prime number. This element \(p\) is called characteristic. Simple field is denoted as
+        \(GF(p)\) (Galois Field) and elements of such field are \(0, 1, 2, \ldots, p-1\).<br/>
+        Example:
+        <p>\(GF(5)\) consists of elements \(0, 1, 2, 3, 4\).</p>
+        Using <strong>rslib</strong>:
+        <pre class="prettyprint">
+        #include &lt;rslib/simplefield.h&gt;
+
+        rslib::SimpleField GF(5);
+        </pre>
+        <h4>Arithmetic</h4>
+        <p>In simple field works addition, subtraction, multiplication and division.</p>
+        <p><strong>Addition</strong> of elements \(a\) and \(b\)</p>
+        \[ (a + b) \mod p \]
+        <p><strong>Subtraction</strong> of elements \(a\) and \(b\)</p>
+        \[ (a - b) \mod p = (a + (-b)) \mod p \]
+        where
+        \[-b \mod p = (p -b) \mod p\]
+        <p><strong>Multiplication</strong> of elements \(a\) and \(b\)</p>
+        \[ (a \times b) \mod p \]
+        <p><strong>Division</strong> of elements \(a\) and \(b\)</p>
+        \[ (a \div b) \mod p = (a \times b^{-1}) \mod p\]
+        where
+        \[ b^{-1} = b^{p-2} \]
+        because Fermat's little theorem says that
+        \[ b^p \equiv b \mod p \]
+        and in finite field it is so that
+        \[ b^p = b \]
+        so if we divide both sides by \(b\)
+        \[ b^{p-1} = 1 \]
+        and then again
+        \[ b^{p-2} = \frac{1}{b} = b^{-1} \]
+        Example:
+        In the \(GF(5)\):
+        \[ 3 + 4 = 2 \]
+        \[ 3 - 4 = 3 + 1 = 4 \]
+        \[ 3 \times 4 = 2 \]
+        \[ 3 \div 4 = 3 \times 4 = 2 \]
+        \[ -4 = 1 \]
+        \[ 4^{-1} = 4 \]
+        Using <strong>rslib</strong>:
+        <pre class="prettyprint">
+        #include &lt;rslib/simplefield.h&gt;
+        #include &lt;rslib/simplefieldelement.h&gt;
+
+        rslib::SimpleField GF(5);
+        rslib::SimpleFieldElement first(3, GF);
+        rslib::SimpleFieldElement second(4, GF);
+        std::cout &lt;&lt; first + second; // 2
+        std::cout &lt;&lt; first - second; // 4
+        std::cout &lt;&lt; first * second; // 2
+        std::cout &lt;&lt; first / second; // 2
+        std::cout &lt;&lt; -second; // 1
+        std::cout &lt;&lt; second.multiplicativeInverse(); // 4
+        </pre>
         <h3>Sources</h3>
         <ul>
           <li><a href="http://en.wikipedia.org/wiki/Polynomial_long_division">Polynomial long division</a></li>
           <li><a href="http://en.wikipedia.org/wiki/Horner%27s_method">Horner's method</a></li>
+          <li>Władysław Mochnacki, Kody korekcyjne i kryptografia</li>
+          <li><a href="http://en.wikipedia.org/wiki/Finite_field_arithmetic">Finite field arithmetic</a></li>
         </ul>
       </section>
       <footer>
