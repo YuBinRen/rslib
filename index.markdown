@@ -10,7 +10,7 @@ layout: default
 
 If there are two polynomials:
 
-\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \]
+\\\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \]
 \\[ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 \\]
 
 then sum of these polynomials is:
