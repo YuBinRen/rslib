@@ -143,8 +143,8 @@ $$ \begin{array}{l}
 \hspace{5 mm} \overline{2x^2+3x+2}\div x+3 \newline
 -\underline{(2x^2+6x)} \newline
 \hspace{12 mm} -3x + 2 \newline
-\hspace{5 mm} -\underline{(-3x - 9)} \newline
-\hspace{27 mm} 11\end{array}$$
+\hspace{6 mm} -\underline{(-3x - 9)} \newline
+\hspace{25 mm} 11\end{array}$$
 
 $$ q(x) = 2x - 3 $$
 
