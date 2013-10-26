@@ -2,7 +2,12 @@
 layout: default
 ---
 
-# rslib project page #
+<h1>rslib project page</h1>
+
+Table of contents:
+
+* TOC.
+{:toc}
 
 ## Polynomials ##
 
@@ -115,7 +120,7 @@ $$ a(x) \div b(x) = q(x) \times b(x) + r(x) $$
 where \\( r(x) \\) is a rest of division
 
 
-### Algorithm of polynomial long division \\( a(x) \div b(x) \\): ###
+#### Algorithm of polynomial long division \\( a(x) \div b(x) \\): ####
 
 <div class="algorithm">
 <div class="algorithm_first_indent">
