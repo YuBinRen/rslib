@@ -138,12 +138,13 @@ $$ a(x) = 2x^2+3x+2 $$
 
 $$ b(x) = x+3 $$
 
-$$ \begin{array}{} \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;2x - 3 \newline
-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\overline{2x^2+3x+2}\div x+3 \newline
+$$ \begin{array}{l}
+\hspace{17 mm} 2x - 3 \newline
+\hspace{5 mm} \overline{2x^2+3x+2}\div x+3 \newline
 -\underline{(2x^2+6x)} \newline
-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\,-3x + 2 \newline
-\;\;\;\;\;\;\;\;\;\;-\underline{(-3x - 9)} \newline
-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;11\end{array}$$
+\hspace{12 mm} -3x + 2 \newline
+\hspace{5 mm} -\underline{(-3x - 9)} \newline
+\hspace{27 mm} 11\end{array}$$
 
 $$ q(x) = 2x - 3 $$
 
