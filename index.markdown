@@ -11,6 +11,7 @@ layout: default
 If there are two polynomials:
 
 $$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+
 $$ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 $$
 
 then sum of these polynomials is:
@@ -20,7 +21,9 @@ $$ a(x) + b(x) = (a_m + b_m)x^m + (a_{m-1} + b_{m-1})x^{m-1} + \ldots + (a_1 + b
 Example:
 
 $$ a(x) = 2x^2 + 3x + 4 $$
+
 $$ b(x) = 4x + 1 $$
+
 $$ a(x) + b(x) = 2x^2 + (3 + 4)x + 4 + 1 = 2x^2 + 7x + 5 $$
 
 Using **rslib**:
@@ -39,6 +42,7 @@ std::cout << result; // [5,7,2,]
 If there are two polynomials:
 
 $$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+
 $$ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 $$
 
 then difference of these polynomials is:
@@ -48,7 +52,9 @@ $$ a(x) - b(x) = (a_m - b_m)x^m + (a_{m-1} - b_{m-1})x^{m-1} + \ldots + (a_1 - b
 Example:
 
 $$ a(x) = 3x + 2 $$
+
 $$ b(x) = 5x^2 + 4x + 1 $$
+
 $$ a(x) - b(x) = (0 - 5)x^2 + (3 - 4)x + 2 - 1 = -5x^2 - x + 1 $$
 
 Using **rslib**:
@@ -67,6 +73,7 @@ std::cout << result; // [1,-1,-5,]
 If there are two polynomials:
 
 $$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+
 $$ b(x) = b_nx^n + b_{n-1}x^{n-1} + \ldots + b_1x + b_0 $$
 
 then product of these polynomials is:
@@ -77,7 +84,9 @@ $$ \begin{array}{rcl} a(x) \times b(x) & = & (a_m \times b_n)x^{m+n} + (a_m \tim
 Example:
 
 $$ a(x) = 3x + 2 $$
+
 $$ b(x) = 5x^2 + 4x + 1 $$
+
 $$ a(x) \times b(x) = (5 \times 3)x^3 + (3 \times 4 + 5 \times 2)x^2 + (3 \times 1 + 4 \times 2)x + 2 \times 1 = 15x^3 + 22x^2 + 11x + 2 $$
 
 Using **rslib**:
@@ -96,6 +105,7 @@ std::cout << result; // [2,11,22,15,]
 If there are two polynomials:
 
 $$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+
 $$ b(x) = b_nx^n + b_{n-1}x^{n-1} + \ldots + b_1x + b_0 $$
 
 then there has to be found such polynomial \\( q(x) \\) so that
@@ -125,16 +135,20 @@ where \\( r(x) \\) is a rest of division
 Example:
 
 $$ a(x) = 2x^2+3x+2 $$
+
 $$ b(x) = x+3 $$
 
-$$ \begin{array}{} \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;2x - 3 \\\\
-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\overline{2x^2+3x+2}\div x+3 \\\\
--\underline{(2x^2+6x)} \\\\
-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\,-3x + 2 \\\\
-\;\;\;\;\;\;\;\;\;\;-\underline{(-3x - 9)}\\\\
+$$ \begin{array}{} \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;2x - 3 \newline
+\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\overline{2x^2+3x+2}\div x+3 \newline
+-\underline{(2x^2+6x)} \newline
+\;\;\;\;\;\;\;\;\;\;\;\;\;\;\,-3x + 2 \newline
+\;\;\;\;\;\;\;\;\;\;-\underline{(-3x - 9)} \newline
 \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;11\end{array}$$
+
 $$ q(x) = 2x - 3 $$
+
 $$ r(x) = 11 $$
+
 $$ (2x^2 + 3x + 2) \div (x + 3) = (2x - 3)(x + 3) + 11 $$
 
 Using **rslib**:
@@ -166,6 +180,7 @@ in a regular way.
 Example:
 
 $$ a(x) = 2x^2+3x+2 = x(2x + 3) + 2 $$
+
 $$ a(2) = 2(2 \times 2 + 3) + 2 = 16 $$
 
 Using **rslib**:
@@ -245,10 +260,15 @@ Example:
 In the \\(GF(5)\\):
 
 $$ 3 + 4 = 2 $$
+
 $$ 3 - 4 = 3 + 1 = 4 $$
+
 $$ 3 \times 4 = 2 $$
+
 $$ 3 \div 4 = 3 \times 4 = 2 $$
+
 $$ -4 = 1 $$
+
 $$ 4^{-1} = 4 $$
 
 Using **rslib**:
