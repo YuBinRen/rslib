@@ -10,18 +10,18 @@ layout: default
 
 If there are two polynomials:
 
-\\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \\]
-\\[ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 \\]
+$$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+$$ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 $$
 
 then sum of these polynomials is:
 
-\\[ a(x) + b(x) = (a_m + b_m)x^m + (a_{m-1} + b_{m-1})x^{m-1} + \ldots + (a_1 + b_1)x + a_0 + b_0 \\]
+$$ a(x) + b(x) = (a_m + b_m)x^m + (a_{m-1} + b_{m-1})x^{m-1} + \ldots + (a_1 + b_1)x + a_0 + b_0 $$
 
 Example:
 
-\\[ a(x) = 2x^2 + 3x + 4 \\]
-\\[ b(x) = 4x + 1 \\]
-\\[ a(x) + b(x) = 2x^2 + (3 + 4)x + 4 + 1 = 2x^2 + 7x + 5 \\]
+$$ a(x) = 2x^2 + 3x + 4 $$
+$$ b(x) = 4x + 1 $$
+$$ a(x) + b(x) = 2x^2 + (3 + 4)x + 4 + 1 = 2x^2 + 7x + 5 $$
 
 Using **rslib**:
 
@@ -38,18 +38,18 @@ std::cout << result; // [5,7,2,]
 
 If there are two polynomials:
 
-\\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \\]
-\\[ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 \\]
+$$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+$$ b(x) = b_mx^m + b_{m-1}x^{m-1} + \ldots + b_1x + b_0 $$
 
 then difference of these polynomials is:
 
-\\[ a(x) - b(x) = (a_m - b_m)x^m + (a_{m-1} - b_{m-1})x^{m-1} + \ldots + (a_1 - b_1)x + a_0 - b_0 \\]
+$$ a(x) - b(x) = (a_m - b_m)x^m + (a_{m-1} - b_{m-1})x^{m-1} + \ldots + (a_1 - b_1)x + a_0 - b_0 $$
 
 Example:
 
-\\[ a(x) = 3x + 2 \\]
-\\[ b(x) = 5x^2 + 4x + 1 \\]
-\\[ a(x) - b(x) = (0 - 5)x^2 + (3 - 4)x + 2 - 1 = -5x^2 - x + 1 \\]
+$$ a(x) = 3x + 2 $$
+$$ b(x) = 5x^2 + 4x + 1 $$
+$$ a(x) - b(x) = (0 - 5)x^2 + (3 - 4)x + 2 - 1 = -5x^2 - x + 1 $$
 
 Using **rslib**:
 
@@ -66,19 +66,19 @@ std::cout << result; // [1,-1,-5,]
 
 If there are two polynomials:
 
-\\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \\]
-\\[ b(x) = b_nx^n + b_{n-1}x^{n-1} + \ldots + b_1x + b_0 \\]
+$$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+$$ b(x) = b_nx^n + b_{n-1}x^{n-1} + \ldots + b_1x + b_0 $$
 
 then product of these polynomials is:
 
-\\[ \begin{array}{rcl} a(x) \times b(x) & = & (a_m \times b_n)x^{m+n} + (a_m \times b_{n-1} + a_{m-1} \times b_n)x^{m+n-1} + \ldots + (a_1 \times b_0 + a_0 \times b_1)x + a_0 \times b_0 \\\\
-& = & (\sum\limits_{i+j=m+n} a_i \times b_j )x^{m+n} + (\sum\limits_{i+j=m+n-1} a_i \times b_j)x^{m+n-1} + \ldots + (\sum\limits_{i+j=1} a_i \times b_j)x + (\sum\limits_{i+j=0} a_i \times b_j) \end{array} \\]
+$$ \begin{array}{rcl} a(x) \times b(x) & = & (a_m \times b_n)x^{m+n} + (a_m \times b_{n-1} + a_{m-1} \times b_n)x^{m+n-1} + \ldots + (a_1 \times b_0 + a_0 \times b_1)x + a_0 \times b_0 \\\\
+& = & (\sum\limits_{i+j=m+n} a_i \times b_j )x^{m+n} + (\sum\limits_{i+j=m+n-1} a_i \times b_j)x^{m+n-1} + \ldots + (\sum\limits_{i+j=1} a_i \times b_j)x + (\sum\limits_{i+j=0} a_i \times b_j) \end{array} $$
 
 Example:
 
-\\[ a(x) = 3x + 2 \\]
-\\[ b(x) = 5x^2 + 4x + 1 \\]
-\\[ a(x) \times b(x) = (5 \times 3)x^3 + (3 \times 4 + 5 \times 2)x^2 + (3 \times 1 + 4 \times 2)x + 2 \times 1 = 15x^3 + 22x^2 + 11x + 2 \\]
+$$ a(x) = 3x + 2 $$
+$$ b(x) = 5x^2 + 4x + 1 $$
+$$ a(x) \times b(x) = (5 \times 3)x^3 + (3 \times 4 + 5 \times 2)x^2 + (3 \times 1 + 4 \times 2)x + 2 \times 1 = 15x^3 + 22x^2 + 11x + 2 $$
 
 Using **rslib**:
 
@@ -95,12 +95,12 @@ std::cout << result; // [2,11,22,15,]
 
 If there are two polynomials:
 
-\\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \\]
-\\[ b(x) = b_nx^n + b_{n-1}x^{n-1} + \ldots + b_1x + b_0 \\]
+$$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
+$$ b(x) = b_nx^n + b_{n-1}x^{n-1} + \ldots + b_1x + b_0 $$
 
 then there has to be found such polynomial \\( q(x) \\) so that
 
-\\[ a(x) \div b(x) = q(x) \times b(x) + r(x) \\]
+$$ a(x) \div b(x) = q(x) \times b(x) + r(x) $$
 
 where \\( r(x) \\) is a rest of division
 
@@ -124,18 +124,18 @@ where \\( r(x) \\) is a rest of division
 
 Example:
 
-\\[ a(x) = 2x^2+3x+2 \\]
-\\[ b(x) = x+3 \\]
+$$ a(x) = 2x^2+3x+2 $$
+$$ b(x) = x+3 $$
 
-\\[ \begin{array}{} \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;2x - 3 \\\\
+$$ \begin{array}{} \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;2x - 3 \\\\
 \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\overline{2x^2+3x+2}\div x+3 \\\\
 -\underline{(2x^2+6x)} \\\\
 \;\;\;\;\;\;\;\;\;\;\;\;\;\;\,-3x + 2 \\\\
 \;\;\;\;\;\;\;\;\;\;-\underline{(-3x - 9)}\\\\
-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;11\end{array}\\]
-\\[ q(x) = 2x - 3 \\]
-\\[ r(x) = 11 \\]
-\\[ (2x^2 + 3x + 2) \div (x + 3) = (2x - 3)(x + 3) + 11 \\]
+\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;11\end{array}$$
+$$ q(x) = 2x - 3 $$
+$$ r(x) = 11 $$
+$$ (2x^2 + 3x + 2) \div (x + 3) = (2x - 3)(x + 3) + 11 $$
 
 Using **rslib**:
 
@@ -154,19 +154,19 @@ std::cout << rest; // [11,]
 
 To evaluate a polynomial Horner's method is used. If there is given a polynomial:
 
-\\[ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 \\]
+$$ a(x) = a_mx^m + a_{m-1}x^{m-1} + \ldots + a_1x + a_0 $$
 
 then it can be rewritten as:
 
-\\[ a(x) = x(x(x \ldots (a_{m}x + a_{m-1}) + a_{m-2}) \ldots ) + a_1) + a_0 \\]
+$$ a(x) = x(x(x \ldots (a_{m}x + a_{m-1}) + a_{m-2}) \ldots ) + a_1) + a_0 $$
 
 Horner's method allows to evaluate polynomial with less number of multiplications than
 in a regular way.
 
 Example:
 
-\\[ a(x) = 2x^2+3x+2 = x(2x + 3) + 2 \\]
-\\[ a(2) = 2(2 \times 2 + 3) + 2 = 16 \\]
+$$ a(x) = 2x^2+3x+2 = x(2x + 3) + 2 $$
+$$ a(2) = 2(2 \times 2 + 3) + 2 = 16 $$
 
 Using **rslib**:
 
@@ -202,54 +202,54 @@ In simple field works addition, subtraction, multiplication and division.
 
 **Addition** of elements \\(a\\) and \\(b\\)
 
-\\[ (a + b) \mod p \\]
+$$ (a + b) \mod p $$
 
 **Subtraction** of elements \\(a\\) and \\(b\\)
 
-\\[ (a - b) \mod p = (a + (-b)) \mod p \\]
+$$ (a - b) \mod p = (a + (-b)) \mod p $$
 
 where
 
-\\[-b \mod p = (p -b) \mod p\\]
+$$-b \mod p = (p -b) \mod p$$
 
 **Multiplication** of elements \\(a\\) and \\(b\\)
 
-\\[ (a \times b) \mod p \\]
+$$ (a \times b) \mod p $$
 
 **Division** of elements \\(a\\) and \\(b\\)
 
-\\[ (a \div b) \mod p = (a \times b^{-1}) \mod p \\]
+$$ (a \div b) \mod p = (a \times b^{-1}) \mod p $$
 
 where
 
-\\[ b^{-1} = b^{p-2} \\]
+$$ b^{-1} = b^{p-2} $$
 
 because Fermat's little theorem says that
 
-\\[ b^p \equiv b \mod p \\]
+$$ b^p \equiv b \mod p $$
 
 and in finite field it is so that
 
-\\[ b^p = b \\]
+$$ b^p = b $$
 
 so if we divide both sides by \\(b\\)
 
-\\[ b^{p-1} = 1 \\]
+$$ b^{p-1} = 1 $$
 
 and then again
 
-\\[ b^{p-2} = \frac{1}{b} = b^{-1} \\]
+$$ b^{p-2} = \frac{1}{b} = b^{-1} $$
 
 Example:
 
 In the \\(GF(5)\\):
 
-\\[ 3 + 4 = 2 \\]
-\\[ 3 - 4 = 3 + 1 = 4 \\]
-\\[ 3 \times 4 = 2 \\]
-\\[ 3 \div 4 = 3 \times 4 = 2 \\]
-\\[ -4 = 1 \\]
-\\[ 4^{-1} = 4 \\]
+$$ 3 + 4 = 2 $$
+$$ 3 - 4 = 3 + 1 = 4 $$
+$$ 3 \times 4 = 2 $$
+$$ 3 \div 4 = 3 \times 4 = 2 $$
+$$ -4 = 1 $$
+$$ 4^{-1} = 4 $$
 
 Using **rslib**:
 
