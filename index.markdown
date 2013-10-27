@@ -545,7 +545,7 @@ Reed-Solomon received word:
 2. computation of error-locator polynomial - this polynomial is used to find locations where error occurred (Berlekamp-Massey algorithm)
 3. computation of error locators - reciprocals of roots of error-locator polynomial
 4. computation of error values for given locations (Forney algorithm)
-5. correction of received word by subtracting error values from given locations
+5. correction of received word by subtracting error values from values of received word at given error locations
 
 Example:
 
