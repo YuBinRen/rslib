@@ -294,9 +294,40 @@ std::cout << -second; // 1
 std::cout << second.multiplicativeInverse(); // 4
 {% endhighlight %}
 
+## Extended finite field ##
+
+Extended finite field denoted as \\(GF(q)\\) where \\(q=p^m\\) is the number of elements
+in the field, \\(p\\) is a prime number and \\(m\\) is an extension order.
+
+To generate extended finite field there can be provided generator polynomial.
+In **rslib** this generator element is a polynomial whose coefficients reside in \\(GF(p)\\).
+Degree of this generator polynomial is equal to \\(m\\). This polynomial is used to generate field elements
+\\(1, \alpha, \alpha^2, \alpha^3, \ldots, \alpha^{q-2}\\). Element \\(\alpha^{q-1}\\) equals to \\(1\\).
+In the \\(GF(q)\\) there is also included element \\(0\\). There is a set of these polynomial generators
+so we need to know exactly which polynomials can generate fields.
+
+Elements are generated as follows using generator polynomial \\(m(x)\\):
+
+* \\(\alpha^0 = 1 = 1 \mod m(x)\\)
+* \\(\alpha = x \mod m(x)\\)
+* \\(\alpha^2 = x^2 \mod m(x)\\)
+* \\(\alpha^3 = x^3 \mod m(x)\\)
+
+and so on.
+
+Example:
+
+\\(GF(8)\\) which is \\(GF(2^3)\\) consists of elements \\(0, 1, \alpha, \alpha^2, \ldots, \alpha^6\\).
+The generator polynomial for this field is \\(m(x) = x^3 + x + 1\\). You can notice that coefficients of
+this polynomial come from field \\(GF(2)\\) - it is \\(0\\) or \\(1\\).
+
+
+
 ## Sources ##
 
 * [Polynomial long division](http://en.wikipedia.org/wiki/Polynomial_long_division)
 * [Horner's method](http://en.wikipedia.org/wiki/Horner%27s_method)
 * Władysław Mochnacki, Kody korekcyjne i kryptografia
+* Kody korekcyjne, kody Reeda-Solomon, lecture material
 * [Finite field arithmetic](http://en.wikipedia.org/wiki/Finite_field_arithmetic)
+* [Forney algorithm](https://en.wikipedia.org/wiki/Forney_algorithm)
