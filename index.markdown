@@ -9,6 +9,42 @@ Table of contents:
 * TOC.
 {:toc}
 
+## Overview ##
+
+This is a C++ library which implements polynomials, simple and extended Galois Fields and
+Reed-Solomon encoder and decoder.
+
+Did you find any mistake or bug? Please share it on [GitHub issues](https://github.com/sycy600/rslib/issues)
+or do a pull request with fix.
+
+This is a documentation for version 0.1.0.
+
+## How to build ##
+
+Clone repository:
+
+    git clone https://github.com/sycy600/rslib.git
+
+Create build directory:
+
+    mkdir build
+    cd build
+
+Run **cmake**:
+
+    cmake ../rslib
+
+Build project:
+
+    make
+
+Install project - that will install static library and headers on your system:
+
+    sudo make install
+
+Include headers in your program and link against **librslib**. To compile the project
+use C++11 standard.
+
 ## Polynomials ##
 
 ### Addition ###
@@ -306,22 +342,278 @@ Degree of this generator polynomial is equal to \\(m\\). This polynomial is used
 In the \\(GF(q)\\) there is also included element \\(0\\). There is a set of these polynomial generators
 so we need to know exactly which polynomials can generate fields.
 
-Elements are generated as follows using generator polynomial \\(m(x)\\):
+Elements are generated as follows using generator polynomial \\(p(x)\\):
 
-* \\(\alpha^0 = 1 = 1 \mod m(x)\\)
-* \\(\alpha = x \mod m(x)\\)
-* \\(\alpha^2 = x^2 \mod m(x)\\)
-* \\(\alpha^3 = x^3 \mod m(x)\\)
+* \\(\alpha^0 = 1 = 1 \mod p(x)\\)
+* \\(\alpha = x \mod p(x)\\)
+* \\(\alpha^2 = x^2 \mod p(x)\\)
+* \\(\alpha^3 = x^3 \mod p(x)\\)
 
 and so on.
 
 Example:
 
 \\(GF(8)\\) which is \\(GF(2^3)\\) consists of elements \\(0, 1, \alpha, \alpha^2, \ldots, \alpha^6\\).
-The generator polynomial for this field is \\(m(x) = x^3 + x + 1\\). You can notice that coefficients of
+The generator polynomial for this field is \\(p(x) = x^3 + x + 1\\). You can notice that coefficients of
 this polynomial come from field \\(GF(2)\\) - it is \\(0\\) or \\(1\\).
 
+* \\(0 = 0\\)
+* \\(\alpha^0 = 1 = 1 \mod x^3 + x + 1\\)
+* \\(\alpha = x \mod x^3 + x + 1 = x\\)
+* \\(\alpha^2 = x^2 \mod x^3 + x + 1 = x^2\\)
+* \\(\alpha^3 = x^3 \mod x^3 + x + 1 = x + 1\\)
+* \\(\alpha^4 = x^4 \mod x^3 + x + 1 = x^2 + x\\)
+* \\(\alpha^5 = x^5 \mod x^3 + x + 1 = x^2 + x + 1\\)
+* \\(\alpha^6 = x^6 \mod x^3 + x + 1 = x^2 + 1\\)
 
+Using **rslib**:
+
+{% highlight cpp %}
+#include <rslib/simplefield.h>
+#include <rslib/simplefieldelement.h>
+#include <rslib/extendedfield.h>
+#include <rslib/extendedfieldelement.h>
+
+rslib::SimpleField GF2 = rslib::SimpleField(2);
+rslib::Polynomial<rslib::SimpleFieldElement>
+      generator = rslib::Polynomial<rslib::SimpleFieldElement>({
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(0, GF2),
+                  rslib::SimpleFieldElement(1, GF2)});
+
+rslib::ExtendedField GF8 = rslib::ExtendedField(generator);
+
+std::cout << rslib::ExtendedFieldElement(0, GF8).getPolynomialRepresentation(); // [0,]
+std::cout << rslib::ExtendedFieldElement(1, GF8).getPolynomialRepresentation(); // [1,]
+std::cout << rslib::ExtendedFieldElement(2, GF8).getPolynomialRepresentation(); // [0,1,]
+std::cout << rslib::ExtendedFieldElement(3, GF8).getPolynomialRepresentation(); // [0,0,1,]
+std::cout << rslib::ExtendedFieldElement(4, GF8).getPolynomialRepresentation(); // [1,1,]
+std::cout << rslib::ExtendedFieldElement(5, GF8).getPolynomialRepresentation(); // [0,1,1,]
+std::cout << rslib::ExtendedFieldElement(6, GF8).getPolynomialRepresentation(); // [1,1,1,]
+std::cout << rslib::ExtendedFieldElement(7, GF8).getPolynomialRepresentation(); // [1,0,1,]
+{% endhighlight %}
+
+### Arithmetic ###
+
+In extended field works addition, subtraction, multiplication and division.
+
+Example:
+
+In the \\(GF(8)\\):
+
+$$ \alpha + \alpha^2 = \alpha^4 $$
+
+$$ \alpha - \alpha^2 = \alpha^4 $$
+
+$$ \alpha \times \alpha^2 = \alpha^3 $$
+
+$$ \alpha \div \alpha^2 = \alpha^6 $$
+
+$$ -\alpha = \alpha $$
+
+$$ \alpha^{-1} = \alpha^6 $$
+
+Using **rslib**:
+
+{% highlight cpp %}
+#include <rslib/simplefield.h>
+#include <rslib/simplefieldelement.h>
+#include <rslib/extendedfield.h>
+#include <rslib/extendedfieldelement.h>
+
+rslib::SimpleField GF2 = rslib::SimpleField(2);
+rslib::Polynomial<rslib::SimpleFieldElement>
+      generator = rslib::Polynomial<rslib::SimpleFieldElement>({
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(0, GF2),
+                  rslib::SimpleFieldElement(1, GF2)});
+
+rslib::ExtendedField GF8 = rslib::ExtendedField(generator);
+rslib::ExtendedFieldElement first(2, GF8);
+rslib::ExtendedFieldElement second(3, GF8);
+std::cout << first + second; // A^4
+std::cout << first - second; // A^4
+std::cout << first * second; // A^3
+std::cout << first / second; // A^6
+std::cout << -first; // A
+std::cout << first.multiplicativeInverse(); // A^6
+{% endhighlight %}
+
+## Reed-Solomon code ##
+
+Reed-Solomon code is an error-correction code. It means that you have some data, you encode this
+data using Reed-Solomon encoding algorithm producing codeword. Then this data can be for example
+somewhere transmitted over some channel and some bytes can be corrupted (for example some bits change
+from 0 to 1 or vice versa). Then while decoding received word by Reed-Solomon code decoder these
+errors can be repaired to some point. One of the characteristic of Reed-Solomon code is
+error correction capability which means how many errors code can correct.
+
+For practical usage it is convenient to use \\(GF(256)\\) to work with Reed-Solomon code.
+Each element of \\(GF(256)\\) can be represented as polynomial of degree \\(7\\) and coefficients
+of these polynomial come from \\(GF(2)\\) which can be \\(0\\) or \\(1\\). So elements can be encoded
+as binary \\(8\\)-elements vector which is a byte.
+
+Codeword of Reed-Solomon code consists of data elements and redundant elements. Data elements are the data
+we want to encode. Redundant elements are added by encoder and used while decoding.
+
+Here are some characteristic for any Reed-Solomon code:
+
+* for field \\(GF(q)\\) number of elements in codeword \\(n\\) equals to \\(q-1\\)
+* each +1 error correction capability requires 2 redundant elements
+
+Example:
+
+For the field \\(GF(16)\\) we want to have a code which can correct four errors. The length of codeword
+equals to \\(n=16-1=15\\). The number of redundant elements equals to \\(r=2*4=8\\). The number
+of data elements equals to \\(k=n-r=15-8=7\\). Such code is denoted as \\(RS(15, 7)\\).
+
+### Encoding ###
+
+For encoding purpose there is used code generator polynomial. For error correction capability \\(t\\)
+this code generator polynomial is created as follows:
+
+$$ g(x) = (x-\alpha)(x-\alpha^2)\cdots(x-\alpha^{2t}) $$
+
+Then we have some data which are represented by information polynomial \\(m(x)\\). Constructing codeword
+\\(c(x)\\) is done as follows:
+
+$$ c(x) = m(x)x^{2t} + (m(x)x^{2t} \mod g(x)) $$
+
+Example:
+
+For code \\(RS(15, 7)\\) the code generator polynomial is as follows:
+
+$$ g(x) = (x-\alpha)(x-\alpha^2)(x-\alpha^3)(x-\alpha^4)(x-\alpha^5)(x-\alpha^6)(x-\alpha^7)(x-\alpha^8)$$
+
+$$ g(x) = x^8 + \alpha^{14}x^7 + \alpha^2x^6 + \alpha^4x^5 + \alpha^2x^4 + \alpha^{13}x^3 + \alpha^5x^2 + \alpha^{11}x + \alpha^6$$
+
+Now let's encode some data. Let the information polynomial be:
+
+$$ m(x) = \alpha^3x^6 + \alpha^{11}x^5 + \alpha^{11}x^4 + \alpha^4x^3 + \alpha^5x^2 + x + \alpha^8 $$
+
+Then after computation:
+
+$$ c(x) = \alpha^3x^{14} + \alpha^{11}x^{13} + \alpha^{11}x^{12} + \alpha^4x^{11} + \alpha^5x^{10} + x^9 + \alpha^8x^8 + \alpha^{13}x^7 + \alpha^5x^6 + \alpha^2x^5 + \alpha^2x^4 + x^3 + {\alpha}x^2 + \alpha^{10}x + \alpha $$
+
+Using **rslib**:
+
+{% highlight cpp %}
+#include <rslib/simplefield.h>
+#include <rslib/simplefieldelement.h>
+#include <rslib/extendedfield.h>
+#include <rslib/extendedfieldelement.h>
+#include <rslib/encoder.h>
+
+rslib::SimpleField GF2 = rslib::SimpleField(2);
+
+rslib::Polynomial<rslib::SimpleFieldElement>
+      generator = rslib::Polynomial<rslib::SimpleFieldElement>({
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(0, GF2),
+                  rslib::SimpleFieldElement(0, GF2),
+                  rslib::SimpleFieldElement(1, GF2)});
+
+rslib::ExtendedField GF16 = rslib::ExtendedField(generator);
+
+rslib::Encoder encoder(4, GF16);
+
+rslib::Polynomial<rslib::ExtendedFieldElement> information =
+      rslib::Polynomial<rslib::ExtendedFieldElement>({
+                  rslib::ExtendedFieldElement(9, GF16),
+                  rslib::ExtendedFieldElement(1, GF16),
+                  rslib::ExtendedFieldElement(6, GF16),
+                  rslib::ExtendedFieldElement(5, GF16),
+                  rslib::ExtendedFieldElement(12, GF16),
+                  rslib::ExtendedFieldElement(12, GF16),
+                  rslib::ExtendedFieldElement(4, GF16)});
+rslib::Polynomial<rslib::ExtendedFieldElement> codeword
+      = encoder.encode(information);
+
+// [A,A^10,A,1,A^2,A^2,A^5,A^13,A^8,1,A^5,A^4,A^11,A^11,A^3,]
+std::cout << codeword << std::endl;
+{% endhighlight %}
+
+### Decoding ###
+
+Decoding process can repair up to \\(t\\) errors in received word. There are several steps to decode
+Reed-Solomon received word:
+
+1. computation of syndromes - syndromes are not zeros then we have corrupted data
+2. computation of error-locator polynomial - this polynomial is used to find locations where error occurred (Berlekamp-Massey algorithm)
+3. computation of error locators - reciprocals of roots of error-locator polynomial
+4. computation of error values for given locations (Forney algorithm)
+5. correction of received word by subtracting error values from given locations
+
+Example:
+
+Going back to codeword
+
+$$ c(x) = \alpha^3x^{14} + \alpha^{11}x^{13} + \alpha^{11}x^{12} + \alpha^4x^{11} + \alpha^5x^{10} + x^9 + \alpha^8x^8 + \alpha^{13}x^7 + \alpha^5x^6 + \alpha^2x^5 + \alpha^2x^4 + x^3 + {\alpha}x^2 + \alpha^{10}x + \alpha $$
+
+Let's say that there occurred three errors during transmission and we have following received word (notice coefficients by \\(x^{14}, x^{6}, x\\)):
+
+$$ r(x) = \alpha^{11}x^{14} + \alpha^{11}x^{13} + \alpha^{11}x^{12} + \alpha^4x^{11} + \alpha^5x^{10} + x^9 + \alpha^8x^8 + \alpha^{13}x^7 + \alpha^5x^6 + \alpha^4x^5 + \alpha^2x^4 + x^3 + {\alpha}x^2 + \alpha^{13}x + \alpha $$
+
+The output of decoding is information polynomial:
+
+$$ m(x) = \alpha^3x^6 + \alpha^{11}x^5 + \alpha^{11}x^4 + \alpha^4x^3 + \alpha^5x^2 + x + \alpha^8 $$
+
+Using **rslib**:
+
+{% highlight cpp %}
+#include <rslib/simplefield.h>
+#include <rslib/simplefieldelement.h>
+#include <rslib/extendedfield.h>
+#include <rslib/extendedfieldelement.h>
+#include <rslib/encoder.h>
+#include <rslib/bmadecoder.h>
+
+rslib::SimpleField GF2 = rslib::SimpleField(2);
+
+rslib::Polynomial<rslib::SimpleFieldElement>
+      generator = rslib::Polynomial<rslib::SimpleFieldElement>({
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(1, GF2),
+                  rslib::SimpleFieldElement(0, GF2),
+                  rslib::SimpleFieldElement(0, GF2),
+                  rslib::SimpleFieldElement(1, GF2)});
+
+rslib::ExtendedField GF16 = rslib::ExtendedField(generator);
+
+rslib::Encoder encoder(4, GF16);
+
+rslib::Polynomial<rslib::ExtendedFieldElement> information =
+      rslib::Polynomial<rslib::ExtendedFieldElement>({
+                  rslib::ExtendedFieldElement(9, GF16),
+                  rslib::ExtendedFieldElement(1, GF16),
+                  rslib::ExtendedFieldElement(6, GF16),
+                  rslib::ExtendedFieldElement(5, GF16),
+                  rslib::ExtendedFieldElement(12, GF16),
+                  rslib::ExtendedFieldElement(12, GF16),
+                  rslib::ExtendedFieldElement(4, GF16)});
+
+rslib::Polynomial<rslib::ExtendedFieldElement> codeword
+      = encoder.encode(information);
+
+// [A,A^10,A,1,A^2,A^2,A^5,A^13,A^8,1,A^5,A^4,A^11,A^11,A^3,]
+std::cout << codeword << std::endl;
+
+rslib::Polynomial<rslib::ExtendedFieldElement>
+                                 receivedWord(codeword);
+receivedWord.setValue(1, rslib::ExtendedFieldElement(14, GF16));
+receivedWord.setValue(5, rslib::ExtendedFieldElement(5, GF16));
+receivedWord.setValue(14, rslib::ExtendedFieldElement(12, GF16));
+// [A,A^13,A,1,A^2,A^4,A^5,A^13,A^8,1,A^5,A^4,A^11,A^11,A^11,]
+std::cout << receivedWord << std::endl;
+
+rslib::BMADecoder decoder(4, GF16);
+
+// [A^8,1,A^5,A^4,A^11,A^11,A^3,]
+std::cout << decoder.decode(receivedWord) << std::endl;
+{% endhighlight %}
 
 ## Sources ##
 
@@ -331,3 +623,4 @@ this polynomial come from field \\(GF(2)\\) - it is \\(0\\) or \\(1\\).
 * Kody korekcyjne, kody Reeda-Solomon, lecture material
 * [Finite field arithmetic](http://en.wikipedia.org/wiki/Finite_field_arithmetic)
 * [Forney algorithm](https://en.wikipedia.org/wiki/Forney_algorithm)
+* [Reed-Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction)
